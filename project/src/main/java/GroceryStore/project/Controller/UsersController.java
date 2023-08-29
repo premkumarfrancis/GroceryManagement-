@@ -24,12 +24,6 @@ import GroceryStore.project.service.UsersService;
 public class UsersController {
 	@Autowired
 	UsersService usersService;
-	
-	@GetMapping("/{id}/cart")
-	public List<Product> getCart(@PathVariable int id ) throws CategoryNotFoundException{
-		List<Product> cart = usersService.getCart(id);
-		return cart;
-	}
 
 	@GetMapping
 	public List<Users> getMapping() {
