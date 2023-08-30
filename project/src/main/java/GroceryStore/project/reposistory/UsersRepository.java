@@ -10,6 +10,9 @@ public interface UsersRepository extends JpaRepository< Users,Integer> {
 
 	Users findByName(String name);
 	    //select * from users where name=name
+
+	Users findByUserName(String username);
+
 	
 	
 }
