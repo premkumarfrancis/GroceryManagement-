@@ -3,6 +3,7 @@ package GroceryStore.project.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,19 +32,19 @@ public class ProductController {
 	}
 
 	@PostMapping
-	public HttpStatus createProduct(@RequestBody Product product) throws ProductNotFoundException {
+	public HttpStatus createProduct(@RequestBody Product product,Authentication auth) throws ProductNotFoundException {
 		productService.createProduct(product);
 		return HttpStatus.CREATED;
 	}
 
 	@PutMapping("/{id}")
-	public HttpStatus updateProduct(@PathVariable int id, @RequestBody Product product) throws ProductNotFoundException {
+	public HttpStatus updateProduct(@PathVariable int id, @RequestBody Product product,Authentication auth) throws ProductNotFoundException {
 		productService.updateProduct(id, product);
 		return HttpStatus.OK;
 	}
 
 	@DeleteMapping("/{id}")
-	public HttpStatus deleteProduct(@PathVariable int id) throws ProductNotFoundException {
+	public HttpStatus deleteProduct(@PathVariable int id,Authentication auth) throws ProductNotFoundException {
 		productService.deleteProduct(id);
 		return HttpStatus.OK;
 

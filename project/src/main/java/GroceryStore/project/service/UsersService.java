@@ -25,8 +25,7 @@ public class UsersService {
 			throw new UsersNotFoundException("Already Exist");
 		}
 	}
-	
-
+ 	
 	public void updateUsers(int id, Users users) throws UsersNotFoundException {
 		Optional<Users> user=usersRepository.findById(id);
 		if(user.isPresent()) {
@@ -52,12 +51,19 @@ public class UsersService {
 		}
 	}
 
-	
-
 	public List<Users> getusers() {
 		List<Users> user=usersRepository.findAll();
 		return user;
 	}
-
 	
+	public Users getUserById(int id) throws UsersNotFoundException {
+		Optional<Users> user=usersRepository.findById(id);
+		if(user.isPresent()) {
+			Users preUser=user.get();
+			return preUser;
+		}
+		else {
+			throw new UsersNotFoundException("User Not Found");
+		}
+	}
 }

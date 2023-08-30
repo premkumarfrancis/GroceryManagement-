@@ -16,12 +16,12 @@ public class Users {
 	@Column
 	private String name;
 	@Column
-	private int password;
+	private String password;
 	@Column
 	private  String role;
 	@Column
 	private String mailId;
-	public Users(int id, String name, int password, String role, String mailId) {
+	public Users(int id, String name, String password, String role, String mailId) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -41,10 +41,10 @@ public class Users {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getPassword() {
+	public String getPassword() {
 		return password;
 	}
-	public void setPassword(int password) {
+	public void setPassword(String password) {
 		this.password = password;
 	}
 	public String getRole() {
