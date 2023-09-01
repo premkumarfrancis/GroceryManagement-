@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import GroceryStore.project.Model.CategoryNotFoundException;
 import GroceryStore.project.Model.Product;
 import GroceryStore.project.Model.ProductNotFoundException;
 import GroceryStore.project.service.ProductService;
@@ -32,19 +33,19 @@ public class ProductController {
 	}
 
 	@PostMapping
-	public HttpStatus createProduct(@RequestBody Product product,Authentication auth) throws ProductNotFoundException {
+	public HttpStatus createProduct(@RequestBody Product product) throws ProductNotFoundException, CategoryNotFoundException {
 		productService.createProduct(product);
 		return HttpStatus.CREATED;
 	}
 
 	@PutMapping("/{id}")
-	public HttpStatus updateProduct(@PathVariable int id, @RequestBody Product product,Authentication auth) throws ProductNotFoundException {
+	public HttpStatus updateProduct(@PathVariable int id, @RequestBody Product product) throws ProductNotFoundException {
 		productService.updateProduct(id, product);
 		return HttpStatus.OK;
 	}
 
 	@DeleteMapping("/{id}")
-	public HttpStatus deleteProduct(@PathVariable int id,Authentication auth) throws ProductNotFoundException {
+	public HttpStatus deleteProduct(@PathVariable int id) throws ProductNotFoundException {
 		productService.deleteProduct(id);
 		return HttpStatus.OK;
 

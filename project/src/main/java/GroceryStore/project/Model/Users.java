@@ -1,11 +1,15 @@
 package GroceryStore.project.Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Users {
@@ -21,6 +25,15 @@ public class Users {
 	private  String role;
 	@Column
 	private String mailId;
+	
+	@OneToMany(mappedBy = "user")
+	private List<Order> orders = new ArrayList<>();
+
+	
+	public Users() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	public Users(int id, String name, String password, String role, String mailId) {
 		super();
 		this.id = id;
@@ -57,6 +70,15 @@ public class Users {
 		return mailId;
 	}
 	public void setMail_id(String mailId) {
+		this.mailId = mailId;
+	}
+	public List<Order> getOrders() {
+		return orders;
+	}
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
+	public void setMailId(String mailId) {
 		this.mailId = mailId;
 	}
 

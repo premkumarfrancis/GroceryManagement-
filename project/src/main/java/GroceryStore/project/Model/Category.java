@@ -14,12 +14,13 @@ import jakarta.persistence.OneToMany;
 public class Category {
 	@Id
 	@Column
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	private int id;
 	@Column
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	private String name;
-	@OneToMany(mappedBy="category")
-	private List<Product> products;
+	public Category() {
+		super();
+	}
 
 	public Category(int id,String name) {
 		super();
@@ -43,14 +44,14 @@ public class Category {
 		this.name = name;
 	}
 
-	public List<Product> getProducts() {
-		return products;
-	}
-
-	public void setProducts(List<Product> products) {
-		this.products = products;
-	}
-	
+//	public List<Product> getProducts() {
+//		return products;
+//	}
+//
+//	public void setProducts(List<Product> products) {
+//		this.products = products;
+//	}
+//	
 	
 	
 	

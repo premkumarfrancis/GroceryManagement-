@@ -10,5 +10,7 @@ import GroceryStore.project.Model.Product;
 
 	Product findByName(String name);
 
+	Product getProductByName(String productName);
+
 }
  
