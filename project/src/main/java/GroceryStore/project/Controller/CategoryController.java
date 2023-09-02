@@ -1,9 +1,9 @@
-package GroceryStore.project.Controller;
+ package GroceryStore.project.Controller;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
+//import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import GroceryStore.project.Model.Category;
 import GroceryStore.project.Model.CategoryNotFoundException;
+
 import GroceryStore.project.service.CategoryService;
 
 @RestController
@@ -29,17 +30,17 @@ public class CategoryController {
 		return categorys;	
     }
     @PostMapping
-    public HttpStatus createCategory(@RequestBody Category category,Authentication auth) throws CategoryNotFoundException{
+    public HttpStatus createCategory(@RequestBody Category category) throws CategoryNotFoundException{
     	categoryservice.createCategory(category);
     	return HttpStatus.CREATED;
     }
     @PutMapping("/{id}")
-    public HttpStatus updateProduct (@PathVariable int id,@RequestBody Category category,Authentication auth) throws CategoryNotFoundException {
+    public HttpStatus updateProduct (@PathVariable int id,@RequestBody Category category) throws CategoryNotFoundException {
     	categoryservice.updateCategory(id,category);
     	return HttpStatus.OK;
     }
     @DeleteMapping("/{id}")
-    public HttpStatus deleteProduct(@PathVariable int id,Authentication auth ) throws CategoryNotFoundException {
+    public HttpStatus deleteProduct(@PathVariable int id) throws CategoryNotFoundException {
 			categoryservice.deleteCategory(id);
     			return HttpStatus.OK;
     }

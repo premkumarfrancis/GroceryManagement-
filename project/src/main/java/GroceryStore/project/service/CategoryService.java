@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import GroceryStore.project.Model.Category;
 import GroceryStore.project.Model.CategoryNotFoundException;
+import GroceryStore.project.Model.Product;
 import GroceryStore.project.reposistory.CategoryReposistory;
 @Service
 public class CategoryService {
@@ -19,16 +20,27 @@ public class CategoryService {
 		return category;
 	}
 
-	public void createCategory(Category category) throws CategoryNotFoundException {
-			category=categoryRepository.findByName(category.getName());
-			if(category!=null) {
+	/*public void createCategory(Category category) throws CategoryNotFoundException {
+		Category newCategory=categoryRepository.findByName(category.getName());
+			if(newCategory!=null) {
+				category.setId(newCategory.getId());
+				category.setName(newCategory.getName());
 				categoryRepository.save(category);
 			}
 			else {
-				throw new CategoryNotFoundException("Already Exist");
+				categoryRepository.save(category);
 			}
-		
+	}*/
+	public void createCategory(Category category) throws CategoryNotFoundException {
+	    Category existingCategory = categoryRepository.findByName(category.getName());
+	    
+	    if (existingCategory != null) {
+	        throw new CategoryNotFoundException("Category with the given name already exists");
+	    }
+	    
+	    categoryRepository.save(category);
 	}
+
 
 	public void updateCategory(int id, Category category) throws CategoryNotFoundException {
 			Optional<Category>categories=categoryRepository.findById(id);
@@ -52,5 +64,17 @@ public class CategoryService {
 			throw new CategoryNotFoundException("User Not Found");
 		}
 	}
+	/*public void deleteCategory(int categoryId) {
+	    Optional<Category> category = categoryRepository.findById(categoryId);
+	    if (category.isPresent()) {
+	        List<Product> products = category.get().getProducts();
+	        for (Product product : products) {
+	            product.setCategory(null); // Remove category reference
+	            productRepository.save(product);
+	        }
+	        categoryRepository.deleteById(categoryId);
+	    }
+	}*/
+
 
 }

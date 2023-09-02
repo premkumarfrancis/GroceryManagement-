@@ -2,24 +2,23 @@ package GroceryStore.project.Model;
 
 import java.util.List;
 
-import jakarta.annotation.Generated;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 public class Category {
 	@Id
 	@Column
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	private int id;
 	@Column
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	private String name;
-	@OneToMany(mappedBy="category")
-	private List<Product> products;
+	public Category() {
+		super();
+	}
 
 	public Category(int id,String name) {
 		super();
@@ -43,21 +42,4 @@ public class Category {
 		this.name = name;
 	}
 
-	public List<Product> getProducts() {
-		return products;
-	}
-
-	public void setProducts(List<Product> products) {
-		this.products = products;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	}
