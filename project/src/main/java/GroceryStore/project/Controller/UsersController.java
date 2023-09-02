@@ -1,9 +1,11 @@
 package GroceryStore.project.Controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.access.prepost.PreAuthorize;
@@ -87,5 +89,26 @@ public class UsersController {
 	        return ResponseEntity.badRequest().body("User not found");
 	    }
 	}
+	@GetMapping("/{id}/orders")
+	public ResponseEntity<List<Order>> getOrdersByDate(
+	        @PathVariable int id,
+	        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+	        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) throws UsersNotFoundException {
+	    try {
+	        Users user = usersService.getUserById(id);
 
+	        if (user != null) {
+	            List<Order> orders = usersService.getOrdersByDate(user.getId(), startDate, endDate);
+
+	            // Return the filtered orders
+	            return ResponseEntity.ok(orders);
+	        } else {
+	            return ResponseEntity.notFound().build();
+	        }
+	    } catch (UsersNotFoundException e) {
+	        return ResponseEntity.notFound().build();
+	    }
+	   
+	}
+	
 }

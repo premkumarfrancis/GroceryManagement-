@@ -1,5 +1,6 @@
 package GroceryStore.project.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -78,33 +79,35 @@ public class UsersService {
 		return orderRepository.findByUserId(userId);
 	}
 	
+	public void placeOrder(int userId, String productName, int quantity) throws UsersNotFoundException, ProductNotFoundException, OutOfStockException {
+        Users user = usersRepository.findById(userId)
+                .orElseThrow(() -> new UsersNotFoundException("User not found"));
 
-	    public void placeOrder(int userId, String productName, int quantity) throws UsersNotFoundException, ProductNotFoundException, OutOfStockException {
-	        Users user = usersRepository.findById(userId)
-	                .orElseThrow(() -> new UsersNotFoundException("User not found"));
+        Product product = productRepository.getProductByName(productName);
 
-	        Product product = productRepository.getProductByName(productName);
+        if (product == null) {
+            throw new ProductNotFoundException("Product not found");
+        }
 
-	        if (product == null) {
-	            throw new ProductNotFoundException("Product not found");
-	        }
+        if (product.getQuantity() < quantity) {
+            throw new OutOfStockException("Product quantity is insufficient");
+        }
 
-	        if (product.getQuantity() < quantity) {
-	            throw new OutOfStockException("Product quantity is insufficient");
-	        }
+        // Create a new order
+        Order order = new Order();
+        order.setUser(user);
+        order.setProduct(product);
+        order.setQuantity(quantity);
 
-	        // Create a new order
-	        Order order = new Order();
-	        order.setUser(user);
-	        order.setProduct(product);
-	        order.setQuantity(quantity);
+        // Reduce the quantity of the product
+        product.setQuantity(product.getQuantity() - quantity);
 
-	        // Reduce the quantity of the product
-	        product.setQuantity(product.getQuantity() - quantity);
-
-	        // Save the order and update the product
-	        orderRepository.save(order);
-	        productRepository.save(product); // You should implement a saveProduct method in your ProductService
-	    }
+        // Save the order and update the product
+        orderRepository.save(order);
+        productRepository.save(product); // You should implement a saveProduct method in your ProductService
+    }
+	public List<Order> getOrdersByDate(int userId, LocalDate startDate, LocalDate endDate) {
+        return orderRepository.findByUser_IdAndOrderDateBetween(userId, startDate, endDate);
+    }
 	}
 
